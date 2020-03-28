@@ -17,7 +17,7 @@ function o(cb) {
         });
     }
 }
-export default o;
+module.exports = o;
 if (false) {
     o(async o => {
         try {
