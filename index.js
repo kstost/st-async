@@ -1,18 +1,35 @@
 function o(cb) {
-    if (cb.constructor.name === 'AsyncFunction') {
+    if (cb === undefined) {
+        return this;
+    } else if (arguments.length === 2 && arguments[1] && (typeof arguments[1] === 'boolean')) {
+        this.data = arguments[0];
+        if (!this.list) { this.list = []; }
+        this.list.push(arguments[0]);
+    } else if (cb.constructor.name === 'AsyncFunction') {
         cb(o.bind({}));
     } else {
         if (arguments.length > 1) {
-            let fns = Array.from(arguments).filter(f => (f.constructor.name === 'Function'));
+            let fns = Array.from(arguments).filter(f => {
+                let name = f.constructor.name;
+                return name === 'Function' || name === 'Promise';
+            });
             let cf = arguments[arguments.length - 1];
             if (cf.constructor.name !== 'Object') { cf = null; }
             o(async o => {
                 try {
-                    for (let i = 0; i < fns.length; i++) { await o(fns[i]); }
+                    for (let i = 0; i < fns.length; i++) {
+                        let no = fns[i];
+                        let name = no.constructor.name;
+                        if (name === 'Function') {
+                            await o(no);
+                        } else {
+                            o(await no, true);
+                        }
+                    }
                 } catch (e) {
                     if (cf) { cf.catch(e); }
                 } finally {
-                    if (cf) { cf.finally(); }
+                    if (cf) { cf.finally(o().list); }
                 }
             });
         } else {
@@ -20,8 +37,10 @@ function o(cb) {
                 let ob = this;
                 return new Promise((resolve, reject) => {
                     let fn = function (data, error) {
-                        ob.data = data;
                         if (!error) {
+                            ob.data = data;
+                            if (!ob.list) { ob.list = []; }
+                            ob.list.push(data);
                             resolve(data);
                         } else {
                             reject(error);
