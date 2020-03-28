@@ -1,5 +1,10 @@
 # st-async
 ```js
+/*
+    Install by below
+    $ npm install st-async
+*/
+
 let o = require('st-async');
 
 // Example 1
