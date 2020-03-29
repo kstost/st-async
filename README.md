@@ -1,4 +1,7 @@
-# st-async
+# st-async 
+Be lazy, Write short 
+ 
+
 ```js
 /*
     Install by below
