@@ -80,6 +80,34 @@ o(
 )
 
 // Example 4
+stAsync(
+    stAsync(
+        o => { o('Hello'); },
+        o => { o('World'); },
+        stAsync.finally(list => {
+            console.log(JSON.stringify(list)); // ["Hello","World"]
+        }),
+    ),
+    new Promise((resolve, reject) => {
+        resolve('Apple');
+    }),
+    o => {
+        console.log(o.data); // Apple
+        o('Banana', 'Errrror!');
+    },
+    o => {
+        console.log(o.data); // Can't run
+        o('Fish');
+    },
+    stAsync.catch(error => {
+        console.log(error); // Errrror!
+    }),
+    stAsync.finally(list => {
+        console.log(JSON.stringify(list)); // [["Hello","World"],"Apple"]
+    }),
+)
+
+// Example 5
 o(async o => {
     try {
         await o(o => {
