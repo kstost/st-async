@@ -8,7 +8,7 @@ Be lazy, Write short
     $ npm install st-async
 */
 
-let o = require('st-async');
+let stAsync = require('st-async');
 
 // Example 0
 stAsync(
@@ -20,7 +20,7 @@ stAsync(
 )
 
 // Example 1
-o(
+stAsync(
     o => {
         o('hello');
     },
@@ -35,7 +35,7 @@ o(
 )
 
 // Example 2
-o(
+stAsync(
     o => {
         o('hello');
     },
@@ -62,7 +62,7 @@ o(
 )
 
 // Example 3
-o(
+stAsync(
     o => {
         o('hello');
     },
@@ -120,7 +120,7 @@ stAsync(
 )
 
 // Example 5
-o(async o => {
+stAsync(async o => {
     try {
         await o(o => {
             o('hello');
