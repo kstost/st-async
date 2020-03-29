@@ -7,6 +7,15 @@
 
 let o = require('st-async');
 
+// Example 0
+stAsync(
+    o => { o('Hello'); },
+    o => { o('World'); },
+    stAsync.finally(list => {
+        console.log(list); // ["Hello","World"]
+    }),
+)
+
 // Example 1
 o(
     o => {
