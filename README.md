@@ -78,23 +78,4 @@ stAsync(
     }),
 )
 
-// Example 5
-stAsync(async o => {
-    try {
-        await o(o => {
-            o('hello');
-        });
-        await o(o => {
-            console.log(o.data); // hello
-            o(null, 'error');
-        });
-        await o(o => {
-            console.log(o.data); // Can't run
-        });
-    } catch (e) {
-        console.log(e); // error
-    } finally {
-        console.log('Finally');
-    }
-});
 ```
