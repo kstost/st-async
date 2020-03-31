@@ -42,7 +42,7 @@ function stAsync(cb) {
                         if (get_type(step_functions[i], 'Function')) {
                             await binded_function({ mode: MODE_FUNCTION, body: step_functions[i] });
                         }
-                        if (get_type(step_functions[i], 'Array') && step_functions.length) {
+                        if (get_type(step_functions[i], 'Array') && step_functions[i].length) {
                             let promise_function = step_functions[i].splice(0, 1)[0];
                             binded_function({ mode: MODE_ASYNC_FUNCTION, body: await promise_function(...step_functions[i]) });
                         }
