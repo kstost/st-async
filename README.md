@@ -74,7 +74,7 @@ stAsync(
         console.log(error); // Errrror!
     }),
     stAsync.finally(list => {
-        console.log(JSON.stringify(list)); // [["Hello","World"],"Apple"]
+        console.log(JSON.stringify(list)); // undefined
     }),
 )
 
