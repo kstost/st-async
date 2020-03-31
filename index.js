@@ -10,7 +10,7 @@ function stAsync(cb) {
     let arlength = arlist.length;
     if (arlength > 1 || (arlength === 1 && get_type(cb, 'Function'))) {
         let step_functions = Array.from(arlist).filter(f => {
-            return get_type(f, 'Function') || get_type(f, 'Promise');
+            return get_type(f, 'Function') || get_type(f, 'Array');
         });
         if (step_functions.length) {
             let catch_finally = Array.from(arlist).map(f => {
@@ -42,8 +42,9 @@ function stAsync(cb) {
                         if (get_type(step_functions[i], 'Function')) {
                             await binded_function({ mode: MODE_FUNCTION, body: step_functions[i] });
                         }
-                        if (get_type(step_functions[i], 'Promise')) {
-                            binded_function({ mode: MODE_ASYNC_FUNCTION, body: await step_functions[i] });
+                        if (get_type(step_functions[i], 'Array') && step_functions.length) {
+                            let promise_function = step_functions[i].splice(0, 1)[0];
+                            binded_function({ mode: MODE_ASYNC_FUNCTION, body: await promise_function(...step_functions[i]) });
                         }
                     }
                 } catch (e) {
