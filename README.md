@@ -10,7 +10,7 @@ Be lazy, Write short
 
 let stAsync = require('st-async');
 
-// Example 0
+// Example 1
 stAsync(
     o => { o('Hello'); },
     o => { o('World'); },
@@ -19,7 +19,7 @@ stAsync(
     }),
 )
 
-// Example 1
+// Example 2
 stAsync(
     o => {
         o('hello');
@@ -34,7 +34,7 @@ stAsync(
     }
 )
 
-// Example 2
+// Example 3
 stAsync(
     o => {
         o('hello');
@@ -61,50 +61,9 @@ stAsync(
     }
 )
 
-// Example 3
-stAsync(
-    o => {
-        o('hello');
-    },
-    new Promise((resolve, reject) => {
-        resolve('by promise');
-    }),
-    o => {
-        console.log(o.data); // by promise
-        o('world');
-    },
-    o => {
-        console.log(o.data); // world
-        o(null, 'error');
-    },
-    o => {
-        console.log(o.data); // Can't run
-        o();
-    },
-    {
-        catch: o => {
-            console.log(o); // error
-        },
-        finally: o => {
-            console.log(o); // ['hello', 'by promise', 'world']
-        },
-    }
-)
-
 // Example 4
 stAsync(
-    stAsync(
-        o => { o('Hello'); },
-        o => { o('World'); },
-        stAsync.finally(list => {
-            console.log(JSON.stringify(list)); // ["Hello","World"]
-        }),
-    ),
-    new Promise((resolve, reject) => {
-        resolve('Apple');
-    }),
     o => {
-        console.log(o.data); // Apple
         o('Banana', 'Errrror!');
     },
     o => {
