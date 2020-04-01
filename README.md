@@ -18,7 +18,8 @@ or
 ```html
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/kstost/st-async/index.js"></script>
 ```
-
+  
+Usages
 ```js
 
 let stAsync = require('st-async');
