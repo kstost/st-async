@@ -9,7 +9,7 @@ Be lazy, Write short
 */
 
 let stAsync = require('st-async');
-stAsync.set_promise(false); // give true as using Example 5
+stAsync.set_promise(false); // give true as using Example 5, 6
 
 // Example 1
 stAsync(
@@ -107,4 +107,46 @@ stAsync(
         console.log(list); // [ 'banana', 'mango', 'kiwi' ]
     })
 )
+
+// Example 6
+stAsync(
+    data => stAsync(
+        data => new Promise((resolve, reject) => {
+            resolve('head');
+        }),
+        data => new Promise((resolve, reject) => {
+            console.log(data); // head
+            resolve('first');
+        }),
+        stAsync.finally(list => {
+            console.log(list); // [ 'head', 'first' ]
+        })
+    ),
+    data => new Promise((resolve, reject) => {
+        resolve('banana');
+    }),
+    data => new Promise((resolve, reject) => {
+        console.log(data); // banana
+        resolve('mango');
+    }),
+    (data, resolve) => {
+        console.log(data); // mango
+        resolve('kiwi');
+    },
+    (data, resolve, reject) => {
+        console.log(data); // kiwi
+        reject('lemon');
+    },
+    data => new Promise((resolve, reject) => {
+        console.log(data);
+        reject('water');
+    }),
+    stAsync.catch(reject_msg => {
+        console.log(reject_msg); // lemon
+    }),
+    stAsync.finally(list => {
+        console.log(list); // [ 'banana', 'mango', 'kiwi' ]
+    })
+)
+
 ```
