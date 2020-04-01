@@ -9,7 +9,7 @@ Be lazy, Write short
 */
 
 let stAsync = require('st-async');
-stAsync.set_promise(false); // give true as using Example 5, 6
+stAsync.set_promise(false); // give true as using Example 5, 6, 7, 8
 
 // Example 1
 stAsync(
@@ -146,6 +146,35 @@ stAsync(
     }),
     stAsync.finally(list => {
         console.log(list); // [ [ 'head', 'first' ], 'banana', 'mango', 'kiwi' ]
+    })
+)
+
+
+// Example 7
+stAsync(
+    data => fetch('http://dummy.restapiexample.com/api/v1/employees').then(res => res.json()),
+    data => fetch('http://dummy.restapiexample.com/api/v1/employees').then(res => res.json()),
+    data => fetch('http://dummy.restapiexample.com/api/v1/employees').then(res => res.json()),
+    data => fetch('http://dummy.restapiexample.com/api/v1/employees').then(res => res.json()),
+    stAsync.finally(list => {
+        console.log(list); // All resolved responses until now are in list
+    })
+)
+
+// Example 8
+stAsync(
+    data => fetch('http://dummy.restapiexample.com/api/v1/employees').then(res => res.json()),
+    data => fetch('http://dummy.restapiexample.com/api/v1/create', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify({ "name": "test", "salary": "123", "age": "23" }),
+        headers: { 'Content-Type': 'application/json' }
+    }).then(res => res.json()),
+    (data, resolve, reject) => {
+        console.log(data); // response of http://dummy.restapiexample.com/api/v1/employees
+        resolve();
+    },
+    stAsync.finally(list => {
+        console.log(list); // All resolved responses until now are in list
     })
 )
 
