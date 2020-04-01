@@ -145,7 +145,7 @@ stAsync(
         console.log(reject_msg); // lemon
     }),
     stAsync.finally(list => {
-        console.log(list); // [ 'banana', 'mango', 'kiwi' ]
+        console.log(list); // [ [ 'head', 'first' ], 'banana', 'mango', 'kiwi' ]
     })
 )
 
