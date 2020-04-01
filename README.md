@@ -7,6 +7,19 @@ Be lazy, Write short
     Install by below
     $ npm install st-async
 */
+```
+
+or you can add script to your web page immediately by running this code in console
+```js
+(function(pr){var loadJS = function(implementationCode, location){var url = pr+'://cdn.jsdelivr.net/gh/kstost/st-async/index.js';var scriptTag = document.createElement('script');scriptTag.src = url;scriptTag.onload = implementationCode;scriptTag.onreadystatechange = implementationCode;location.appendChild(scriptTag);};loadJS(function(){console.log('adding complete');}, document.head);})(location.href.split(':')[0]==='https'?'https':'http');
+```
+
+or
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/kstost/st-async/index.js"></script>
+```
+
+```js
 
 let stAsync = require('st-async');
 stAsync.set_promise(false); // give true as using Example 5, 6, 7, 8
