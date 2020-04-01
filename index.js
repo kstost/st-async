@@ -101,7 +101,6 @@ function stAsync(cb) {
                     return new Promise((resolve, reject) => {
                         let fn = function (data, error) {
                             if (!error) {
-                                ob.binded_function({ mode: MODE_SET_DATA, value: data, data_obj: ob });
                                 resolve(data);
                             } else {
                                 reject(error);
